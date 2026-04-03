@@ -1,0 +1,193 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String?
+  email        String   @unique
+  passwordHash String?
+  role         Role     @default(JAIRO)
+  activated    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tokens        Token[]
+  projectsOwned Project[]      @relation("owner")
+  projectsLed   Project[]      @relation("leader")
+  projectsCo    Project[]      @relation("coresponsible")
+  activities    Activity[]
+  notifications Notification[]
+  tasks         Task[]
+}
+
+enum Role {
+  JAIRO
+  ARELIS
+  GERENCIA
+}
+
+model Token {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      TokenType
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+}
+
+enum TokenType {
+  ACTIVATION
+  PASSWORD_RESET
+}
+
+model Project {
+  id            String        @id @default(cuid())
+  title         String
+  description   String
+  client        String
+  businessLine  String
+  priority      Priority      @default(MEDIUM)
+  stage         Stage         @default(OPORTUNIDAD)
+  status        ProjectStatus @default(DRAFT)
+  ownerId       String
+  owner         User          @relation("owner", fields: [ownerId], references: [id])
+  leaderId      String?
+  leader        User?         @relation("leader", fields: [leaderId], references: [id])
+  corespId      String?
+  coresp        User?         @relation("coresponsible", fields: [corespId], references: [id])
+  dueDate       DateTime?
+  stageDueDates Json?
+  attachments   String[]
+  notes         String?
+  activities    Activity[]
+  tasks         Task[]
+  alerts        Alert[]
+  stageHistory  StageHistory[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  discardedAt   DateTime?
+  discardReason String?
+}
+
+enum Stage {
+  OPORTUNIDAD
+  VIABILIDAD_TECNICA
+  MUESTRA
+  VALIDACION
+  LANZAMIENTO
+  DESCARTADO
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum ProjectStatus {
+  DRAFT
+  ACTIVE
+  STALLED
+  COMPLETED
+  DISCARDED
+}
+
+model StageHistory {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  fromStage Stage?
+  toStage   Stage
+  note      String?
+  createdAt DateTime @default(now())
+  createdBy String
+}
+
+model Activity {
+  id        String       @id @default(cuid())
+  projectId String
+  project   Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User         @relation(fields: [userId], references: [id])
+  type      ActivityType
+  content   String
+  createdAt DateTime     @default(now())
+}
+
+enum ActivityType {
+  PROGRESS
+  BLOCKER
+  INFO_REQUEST
+  DECISION
+  STAGE_CHANGE
+  ASSIGNMENT
+  CREATION
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title       String
+  assigneeId  String?
+  assignee    User?     @relation(fields: [assigneeId], references: [id])
+  dueDate     DateTime?
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+model Alert {
+  id         String    @id @default(cuid())
+  projectId  String
+  project    Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  type       AlertType
+  severity   Severity
+  message    String
+  resolved   Boolean   @default(false)
+  resolvedAt DateTime?
+  createdAt  DateTime  @default(now())
+}
+
+enum AlertType {
+  STAGNATION
+  OVERDUE
+  CRITICAL_DEADLINE
+}
+
+enum Severity {
+  GREEN
+  AMBER
+  RED
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  title     String
+  body      String
+  link      String?
+  read      Boolean          @default(false)
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+}
+
+enum NotificationType {
+  PROJECT_VALIDATED
+  PROJECT_STAGE_ADVANCE
+  PROJECT_DISCARDED
+  INFO_REQUEST
+  ASSIGNMENT
+  GENERAL
+}

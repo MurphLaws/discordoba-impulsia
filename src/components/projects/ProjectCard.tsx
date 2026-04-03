@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Clock, AlertCircle } from 'lucide-react'
 import {
   stageLabel,
@@ -24,7 +25,7 @@ interface ProjectCardProps {
     }
   }
   showOwner?: boolean
-  onClick?: () => void
+  href?: string
 }
 
 const priorityColors: Record<string, string> = {
@@ -53,14 +54,13 @@ const statusLabels: Record<string, string> = {
 export default function ProjectCard({
   project,
   showOwner = false,
-  onClick,
+  href,
 }: ProjectCardProps) {
   const isOverdue =
     project.dueDate && new Date(project.dueDate) < new Date()
 
-  return (
+  const card = (
     <div
-      onClick={onClick}
       className="bg-white border border-gray-200 rounded-lg shadow-sm p-5 hover:shadow-md transition-shadow cursor-pointer"
     >
       {/* Header with Stage Badge */}
@@ -140,4 +140,9 @@ export default function ProjectCard({
       </div>
     </div>
   )
+
+  if (href) {
+    return <Link href={href}>{card}</Link>
+  }
+  return card
 }

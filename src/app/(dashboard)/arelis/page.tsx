@@ -130,9 +130,7 @@ export default async function ArelisPage() {
                 key={project.id}
                 project={project as any}
                 showOwner={true}
-                onClick={() => {
-                  window.location.href = `/arelis/projects/${project.id}`
-                }}
+                href={`/arelis/projects/${project.id}`}
               />
             ))}
           </div>

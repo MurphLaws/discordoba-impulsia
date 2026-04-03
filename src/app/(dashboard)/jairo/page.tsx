@@ -74,7 +74,7 @@ export default async function JairoDashboard() {
         ) : (
           <div className="grid gap-4">
             {projects.map(project => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard key={project.id} project={project} href={`/jairo/projects/${project.id}`} />
             ))}
           </div>
         )}

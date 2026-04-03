@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -73,7 +73,7 @@ function PasswordStrengthIndicator({ password }: { password: string }) {
   )
 }
 
-export default function CreatePasswordPage() {
+function CreatePasswordContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [token, setToken] = useState('')
@@ -261,5 +261,13 @@ export default function CreatePasswordPage() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function CreatePasswordPage() {
+  return (
+    <Suspense fallback={<div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8 text-center"><p className="text-gray-600">Cargando...</p></div>}>
+      <CreatePasswordContent />
+    </Suspense>
   )
 }

@@ -126,7 +126,7 @@ export default function SidebarNav({ role }: SidebarNavProps) {
       {/* Logout Button */}
       <button
         onClick={async () => {
-          await signOut({ redirect: true, redirectUrl: '/login' })
+          await signOut({ redirect: true })
         }}
         className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white transition-colors mt-8"
       >

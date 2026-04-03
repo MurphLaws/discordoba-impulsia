@@ -1,27 +1,18 @@
 import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
+import ProjectForm from '@/components/projects/ProjectForm'
 
 export default async function NewProjectPage() {
   const session = await auth()
-  if (!session) redirect('/login')
+  if (!session || session.user.role !== 'JAIRO') redirect('/login')
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-2xl mx-auto space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">
-          Nuevo Proyecto
-        </h2>
-        <p className="text-gray-600 mt-1">
-          Registra una nueva oportunidad de desarrollo.
-        </p>
+        <h2 className="text-2xl font-bold text-gray-900">Nuevo Proyecto</h2>
+        <p className="text-gray-600 mt-1">Registra una nueva oportunidad.</p>
       </div>
-
-      {/* Placeholder - form will be added later */}
-      <div className="bg-white border border-gray-200 rounded-lg p-8">
-        <p className="text-gray-500">
-          El formulario de nuevo proyecto aparecerá aquí
-        </p>
-      </div>
+      <ProjectForm mode="jairo" />
     </div>
   )
 }

@@ -17,7 +17,7 @@ export default function UserMenu({ user }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleLogout = async () => {
-    await signOut({ redirect: true, redirectUrl: '/login' })
+    await signOut({ redirect: true })
   }
 
   const initials = (user.name || user.email || 'U')

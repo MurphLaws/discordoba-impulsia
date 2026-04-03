@@ -10,9 +10,11 @@ RUN npm ci
 COPY . .
 
 # Build app (prisma generate + next build via package.json script)
-# Dummy DATABASE_URL for prisma generate (it doesn't connect, just generates types)
+# Dummy env vars for build — real values injected at runtime by Railway
 RUN DATABASE_URL="postgresql://build:build@localhost:5432/build" \
     NEXTAUTH_SECRET="build-only-secret" \
+    RESEND_API_KEY="re_build_dummy" \
+    OPENAI_API_KEY="sk-build-dummy" \
     npm run build
 
 # Remove dev dependencies for smaller image

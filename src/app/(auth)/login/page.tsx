@@ -56,14 +56,19 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8">
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-100/50 p-8">
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-gray-900">Bienvenido de vuelta</h2>
+        <p className="text-sm text-gray-400 mt-1">Ingresa con tu correo y contraseña</p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2">
-          <Label htmlFor="email">Correo electrónico</Label>
+          <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-gray-500">Correo electrónico</Label>
           <Input
             id="email"
             type="email"
-            placeholder="tu@email.com"
+            placeholder="tu@discordoba.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading || locked}
@@ -72,7 +77,7 @@ export default function LoginPage() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password">Contraseña</Label>
+          <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-gray-500">Contraseña</Label>
           <div className="relative">
             <Input
               id="password"
@@ -87,26 +92,26 @@ export default function LoginPage() {
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               disabled={loading || locked}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 disabled:opacity-50"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 disabled:opacity-50 transition-colors"
             >
               {showPassword ? (
-                <EyeOff className="w-5 h-5" />
+                <EyeOff className="w-4 h-4" />
               ) : (
-                <Eye className="w-5 h-5" />
+                <Eye className="w-4 h-4" />
               )}
             </button>
           </div>
         </div>
 
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">
+          <div className="p-3 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 font-medium animate-fade-in">
             {error}
           </div>
         )}
 
         <Button
           type="submit"
-          className="w-full bg-[#1e3a5f] hover:bg-[#152d47] text-white h-9"
+          className="w-full bg-gradient-to-r from-[#1e3a5f] to-[#2a5080] hover:from-[#162d4a] hover:to-[#1e3a5f] text-white h-10 rounded-xl shadow-md shadow-[#1e3a5f]/15 transition-all duration-300 hover:shadow-lg hover:shadow-[#1e3a5f]/20"
           disabled={loading || locked}
         >
           {loading ? (
@@ -123,7 +128,7 @@ export default function LoginPage() {
       <div className="mt-6 text-center">
         <Link
           href="/recover"
-          className="text-sm text-[#1e3a5f] hover:underline font-medium"
+          className="text-sm text-[#1e3a5f]/70 hover:text-[#1e3a5f] font-medium transition-colors duration-200"
         >
           ¿Olvidaste tu contraseña?
         </Link>

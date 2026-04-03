@@ -34,17 +34,17 @@ export default function SidebarNav({ role }: SidebarNavProps) {
         {
           href: '/jairo',
           label: 'Dashboard',
-          icon: <LayoutDashboard className="w-5 h-5" />,
+          icon: <LayoutDashboard className="w-[18px] h-[18px]" />,
         },
         {
           href: '/jairo/new-project',
           label: 'Nuevo proyecto',
-          icon: <Plus className="w-5 h-5" />,
+          icon: <Plus className="w-[18px] h-[18px]" />,
         },
         {
           href: '/jairo/notifications',
           label: 'Notificaciones',
-          icon: <Bell className="w-5 h-5" />,
+          icon: <Bell className="w-[18px] h-[18px]" />,
           badge: true,
         },
       ]
@@ -55,23 +55,23 @@ export default function SidebarNav({ role }: SidebarNavProps) {
         {
           href: '/arelis',
           label: 'Dashboard',
-          icon: <LayoutDashboard className="w-5 h-5" />,
+          icon: <LayoutDashboard className="w-[18px] h-[18px]" />,
         },
         {
           href: '/arelis/new-project',
           label: 'Nuevo proyecto',
-          icon: <Plus className="w-5 h-5" />,
+          icon: <Plus className="w-[18px] h-[18px]" />,
         },
         {
           href: '/arelis/alerts',
           label: 'Alertas',
-          icon: <AlertTriangle className="w-5 h-5" />,
+          icon: <AlertTriangle className="w-[18px] h-[18px]" />,
           badge: true,
         },
         {
           href: '/arelis/reports',
           label: 'Reportes',
-          icon: <FileText className="w-5 h-5" />,
+          icon: <FileText className="w-[18px] h-[18px]" />,
         },
       ]
     }
@@ -81,12 +81,12 @@ export default function SidebarNav({ role }: SidebarNavProps) {
         {
           href: '/gerencia',
           label: 'Dashboard',
-          icon: <LayoutDashboard className="w-5 h-5" />,
+          icon: <LayoutDashboard className="w-[18px] h-[18px]" />,
         },
         {
           href: '/gerencia/portfolio',
           label: 'Portafolio',
-          icon: <Briefcase className="w-5 h-5" />,
+          icon: <Briefcase className="w-[18px] h-[18px]" />,
         },
       ]
     }
@@ -102,21 +102,24 @@ export default function SidebarNav({ role }: SidebarNavProps) {
   }
 
   return (
-    <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+    <nav className="flex-1 overflow-y-auto px-3 py-5 space-y-1">
+      <p className="px-3 mb-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/30">
+        Navegación
+      </p>
       {navItems.map((item) => (
         <Link
           key={item.href}
           href={item.href}
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 ${
             isActive(item.href)
-              ? 'bg-white/10 text-white'
-              : 'text-white/70 hover:bg-white/10 hover:text-white'
+              ? 'bg-white/15 text-white shadow-sm shadow-black/10'
+              : 'text-white/60 hover:bg-white/8 hover:text-white/90'
           }`}
         >
           {item.icon}
           <span className="flex-1">{item.label}</span>
           {item.badge && (
-            <span className="inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full bg-red-500 text-white text-xs font-semibold">
+            <span className="inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full bg-red-500/90 text-white text-[10px] font-bold">
               {item.count || '0'}
             </span>
           )}
@@ -124,15 +127,20 @@ export default function SidebarNav({ role }: SidebarNavProps) {
       ))}
 
       {/* Logout Button */}
-      <button
-        onClick={async () => {
-          await signOut({ redirect: true })
-        }}
-        className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white transition-colors mt-8"
-      >
-        <LogOut className="w-5 h-5" />
-        <span>Cerrar sesión</span>
-      </button>
+      <div className="pt-6">
+        <p className="px-3 mb-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/30">
+          Cuenta
+        </p>
+        <button
+          onClick={async () => {
+            await signOut({ redirect: true })
+          }}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium text-white/50 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200"
+        >
+          <LogOut className="w-[18px] h-[18px]" />
+          <span>Cerrar sesión</span>
+        </button>
+      </div>
     </nav>
   )
 }

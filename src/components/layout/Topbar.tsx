@@ -31,22 +31,24 @@ export default function Topbar({ user }: TopbarProps) {
     pathname === path || pathname === path + '/'
   )?.[1] || 'Dashboard'
 
-  const unreadCount = 0 // TODO: Fetch from server/API
+  const unreadCount = 0
 
   return (
-    <div className="bg-white border-b border-gray-200 h-14 px-6 flex items-center justify-between shrink-0">
+    <div className="bg-white/80 backdrop-blur-md border-b border-gray-100 h-16 px-8 flex items-center justify-between shrink-0 sticky top-0 z-10">
       {/* Page Title */}
-      <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
+      <h1 className="text-[15px] font-semibold text-gray-800 tracking-tight">{title}</h1>
 
       {/* Right Actions */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2">
         {/* Notification Bell */}
-        <button className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
-          <Bell className="w-5 h-5" />
+        <button className="relative p-2.5 text-gray-400 hover:text-gray-700 hover:bg-gray-50 rounded-xl transition-all duration-200">
+          <Bell className="w-[18px] h-[18px]" />
           {unreadCount > 0 && (
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" />
           )}
         </button>
+
+        <div className="w-px h-6 bg-gray-100 mx-1" />
 
         {/* User Menu */}
         <UserMenu user={user} />

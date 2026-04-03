@@ -23,24 +23,24 @@ export default async function ActivatePage({
 
   if (!isValid) {
     return (
-      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8 text-center space-y-6">
+      <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-100/50 p-8 text-center space-y-6">
         <div className="flex justify-center">
-          <div className="bg-red-50 p-3 rounded-full">
-            <AlertCircle className="w-8 h-8 text-red-600" />
+          <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center">
+            <AlertCircle className="w-7 h-7 text-red-500" />
           </div>
         </div>
         <div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          <h2 className="text-lg font-bold text-gray-900 mb-2 tracking-tight">
             Enlace inválido
           </h2>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-500 text-sm leading-relaxed">
             Este enlace de activación ha expirado o ya fue utilizado. Por favor,
             solicita un nuevo enlace de activación.
           </p>
         </div>
         <Link
           href="/login"
-          className="inline-block bg-[#1e3a5f] text-white px-6 py-2 rounded-lg hover:bg-[#152d47] font-medium text-sm transition-colors"
+          className="inline-block bg-gradient-to-r from-[#1e3a5f] to-[#2a5080] text-white px-6 py-2.5 rounded-xl hover:from-[#162d4a] hover:to-[#1e3a5f] font-semibold text-sm transition-all duration-300 shadow-md shadow-[#1e3a5f]/15"
         >
           Ir al inicio de sesión
         </Link>
@@ -48,6 +48,5 @@ export default async function ActivatePage({
     )
   }
 
-  // Redirect to create password page with token
   redirect(`/create-password?token=${token}`)
 }

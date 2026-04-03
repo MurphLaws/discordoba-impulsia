@@ -5,7 +5,7 @@ import MetricCard from '@/components/dashboard/MetricCard'
 import ProjectCard from '@/components/projects/ProjectCard'
 import OnboardingTour from '@/components/layout/OnboardingTour'
 import Link from 'next/link'
-import { Plus } from 'lucide-react'
+import { Plus, FolderOpen, AlertTriangle, Rocket } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export default async function JairoDashboard() {
@@ -31,41 +31,62 @@ export default async function JairoDashboard() {
   )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 max-w-6xl">
       <OnboardingTour role="JAIRO" userId={session.user.id} />
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between animate-fade-in-up">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
             Bienvenido, {session.user.name?.split(' ')[0] || 'usuario'}
           </h1>
-          <p className="text-gray-600 text-sm mt-1">Aquí están tus proyectos activos</p>
+          <p className="text-gray-400 text-sm mt-1.5">Aquí están tus proyectos activos</p>
         </div>
         <Link href="/jairo/new-project">
-          <Button className="bg-[#1e3a5f] hover:bg-[#162d4a]">
+          <Button className="bg-gradient-to-r from-[#1e3a5f] to-[#2a5080] hover:from-[#162d4a] hover:to-[#1e3a5f] shadow-md shadow-[#1e3a5f]/15 hover:shadow-lg hover:shadow-[#1e3a5f]/20 transition-all duration-300 rounded-xl h-10 px-5">
             <Plus className="h-4 w-4 mr-2" />
             Nuevo proyecto
           </Button>
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <MetricCard title="Proyectos activos" value={activeProjects.length} color="blue" />
-        <MetricCard
-          title="Con alertas"
-          value={withAlerts.length}
-          color={withAlerts.length > 0 ? 'amber' : 'default'}
-        />
-        <MetricCard title="Lanzados este mes" value={completedThisMonth.length} color="green" />
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div className="animate-fade-in-up stagger-1">
+          <MetricCard
+            title="Proyectos activos"
+            value={activeProjects.length}
+            icon={<FolderOpen className="w-5 h-5" />}
+            color="blue"
+          />
+        </div>
+        <div className="animate-fade-in-up stagger-2">
+          <MetricCard
+            title="Con alertas"
+            value={withAlerts.length}
+            icon={<AlertTriangle className="w-5 h-5" />}
+            color={withAlerts.length > 0 ? 'amber' : 'default'}
+          />
+        </div>
+        <div className="animate-fade-in-up stagger-3">
+          <MetricCard
+            title="Lanzados este mes"
+            value={completedThisMonth.length}
+            icon={<Rocket className="w-5 h-5" />}
+            color="green"
+          />
+        </div>
       </div>
 
-      <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Mis proyectos</h2>
+      <div className="animate-fade-in-up stagger-4">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">Mis proyectos</h2>
         {projects.length === 0 ? (
-          <div className="bg-white border border-dashed border-gray-300 rounded-lg p-12 text-center">
-            <p className="text-gray-500 mb-4">No tienes proyectos registrados aún</p>
+          <div className="bg-white border-2 border-dashed border-gray-200 rounded-2xl p-16 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-5">
+              <FolderOpen className="w-7 h-7 text-gray-300" />
+            </div>
+            <p className="text-gray-500 font-medium mb-1.5">No tienes proyectos registrados</p>
+            <p className="text-gray-400 text-sm mb-6">Comienza registrando tu primera oportunidad</p>
             <Link href="/jairo/new-project">
-              <Button className="bg-[#1e3a5f] hover:bg-[#162d4a]">
+              <Button className="bg-gradient-to-r from-[#1e3a5f] to-[#2a5080] hover:from-[#162d4a] hover:to-[#1e3a5f] shadow-md shadow-[#1e3a5f]/15 rounded-xl h-10 px-5">
                 <Plus className="h-4 w-4 mr-2" />
                 Registrar primera oportunidad
               </Button>
@@ -73,8 +94,10 @@ export default async function JairoDashboard() {
           </div>
         ) : (
           <div className="grid gap-4">
-            {projects.map(project => (
-              <ProjectCard key={project.id} project={project} href={`/jairo/projects/${project.id}`} />
+            {projects.map((project, i) => (
+              <div key={project.id} className={`animate-fade-in-up stagger-${Math.min(i + 1, 6)}`}>
+                <ProjectCard project={project} href={`/jairo/projects/${project.id}`} />
+              </div>
             ))}
           </div>
         )}

@@ -42,21 +42,21 @@ export default function RecoverPage() {
 
   if (sent) {
     return (
-      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8 text-center space-y-6">
+      <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-100/50 p-8 text-center space-y-6 animate-fade-in">
         <div className="flex justify-center">
-          <div className="bg-green-50 p-3 rounded-full">
-            <Check className="w-8 h-8 text-green-600" />
+          <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center">
+            <Check className="w-7 h-7 text-emerald-500" />
           </div>
         </div>
         <div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          <h2 className="text-lg font-bold text-gray-900 mb-2 tracking-tight">
             Correo enviado
           </h2>
-          <p className="text-gray-600 text-sm mb-6">
+          <p className="text-gray-500 text-sm leading-relaxed mb-4">
             Revisa tu bandeja de correo. Te hemos enviado un enlace para
             restablecer tu contraseña. El enlace expira en 1 hora.
           </p>
-          <p className="text-gray-600 text-xs mb-6">
+          <p className="text-gray-400 text-xs">
             Si no ves el correo, verifica tu carpeta de spam.
           </p>
         </div>
@@ -64,7 +64,7 @@ export default function RecoverPage() {
         <div className="space-y-3">
           <Button
             onClick={() => setSent(false)}
-            className="w-full bg-[#1e3a5f] hover:bg-[#152d47] text-white h-9"
+            className="w-full bg-gradient-to-r from-[#1e3a5f] to-[#2a5080] hover:from-[#162d4a] hover:to-[#1e3a5f] text-white h-10 rounded-xl shadow-md shadow-[#1e3a5f]/15"
           >
             Intentar con otro correo
           </Button>
@@ -72,7 +72,7 @@ export default function RecoverPage() {
             <Button
               type="button"
               variant="outline"
-              className="w-full border-gray-200 h-9"
+              className="w-full border-gray-200 h-10 rounded-xl"
             >
               Volver al inicio de sesión
             </Button>
@@ -83,24 +83,23 @@ export default function RecoverPage() {
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8">
+    <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-100/50 p-8">
       <div className="mb-6">
-        <h2 className="text-lg font-semibold text-gray-900">
-          Recupera tu contraseña
+        <h2 className="text-lg font-bold text-gray-900 tracking-tight">
+          Recupera tu acceso
         </h2>
-        <p className="text-gray-600 text-sm mt-1">
-          Ingresa tu correo electrónico y te enviaremos instrucciones para
-          restablecer tu contraseña.
+        <p className="text-gray-400 text-sm mt-1.5">
+          Ingresa tu correo y te enviaremos instrucciones para restablecer tu contraseña.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2">
-          <Label htmlFor="email">Correo electrónico</Label>
+          <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-gray-500">Correo electrónico</Label>
           <Input
             id="email"
             type="email"
-            placeholder="tu@email.com"
+            placeholder="tu@discordoba.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
@@ -109,7 +108,7 @@ export default function RecoverPage() {
         </div>
 
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-md text-sm text-red-700 flex items-start gap-2">
+          <div className="p-3 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 font-medium flex items-start gap-2 animate-fade-in">
             <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
             <span>{error}</span>
           </div>
@@ -117,7 +116,7 @@ export default function RecoverPage() {
 
         <Button
           type="submit"
-          className="w-full bg-[#1e3a5f] hover:bg-[#152d47] text-white h-9"
+          className="w-full bg-gradient-to-r from-[#1e3a5f] to-[#2a5080] hover:from-[#162d4a] hover:to-[#1e3a5f] text-white h-10 rounded-xl shadow-md shadow-[#1e3a5f]/15 transition-all duration-300"
           disabled={loading}
         >
           {loading ? (
@@ -132,7 +131,7 @@ export default function RecoverPage() {
       </form>
 
       <div className="mt-6 text-center">
-        <Link href="/login" className="text-sm text-[#1e3a5f] hover:underline font-medium">
+        <Link href="/login" className="text-sm text-[#1e3a5f]/70 hover:text-[#1e3a5f] font-medium transition-colors duration-200">
           Volver al inicio de sesión
         </Link>
       </div>

@@ -16,53 +16,41 @@ function PasswordStrengthIndicator({ password }: { password: string }) {
   const isStrong = hasLength && hasLetter && hasNumber
 
   return (
-    <div className="space-y-2">
-      <div className="text-xs font-medium text-gray-600">Requisitos:</div>
-      <div className="space-y-1">
-        <div className="flex items-center gap-2 text-xs">
-          {hasLength ? (
-            <Check className="w-4 h-4 text-green-600" />
-          ) : (
-            <X className="w-4 h-4 text-gray-300" />
-          )}
-          <span className={hasLength ? 'text-green-700' : 'text-gray-600'}>
-            Mínimo 8 caracteres
-          </span>
-        </div>
-        <div className="flex items-center gap-2 text-xs">
-          {hasLetter ? (
-            <Check className="w-4 h-4 text-green-600" />
-          ) : (
-            <X className="w-4 h-4 text-gray-300" />
-          )}
-          <span className={hasLetter ? 'text-green-700' : 'text-gray-600'}>
-            Al menos una letra
-          </span>
-        </div>
-        <div className="flex items-center gap-2 text-xs">
-          {hasNumber ? (
-            <Check className="w-4 h-4 text-green-600" />
-          ) : (
-            <X className="w-4 h-4 text-gray-300" />
-          )}
-          <span className={hasNumber ? 'text-green-700' : 'text-gray-600'}>
-            Al menos un número
-          </span>
-        </div>
+    <div className="space-y-3">
+      <div className="text-[11px] font-semibold uppercase tracking-wider text-gray-400">Requisitos:</div>
+      <div className="space-y-2">
+        {[
+          { met: hasLength, label: 'Mínimo 8 caracteres' },
+          { met: hasLetter, label: 'Al menos una letra' },
+          { met: hasNumber, label: 'Al menos un número' },
+        ].map((req) => (
+          <div key={req.label} className="flex items-center gap-2.5 text-xs">
+            <div className={`w-5 h-5 rounded-lg flex items-center justify-center transition-all duration-200 ${req.met ? 'bg-emerald-50' : 'bg-gray-50'}`}>
+              {req.met ? (
+                <Check className="w-3 h-3 text-emerald-600" />
+              ) : (
+                <X className="w-3 h-3 text-gray-300" />
+              )}
+            </div>
+            <span className={`transition-colors duration-200 ${req.met ? 'text-emerald-700 font-medium' : 'text-gray-500'}`}>
+              {req.label}
+            </span>
+          </div>
+        ))}
       </div>
 
       {password && (
-        <div className="mt-2">
-          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div className="mt-3">
+          <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className={`h-full transition-all ${
-                isStrong ? 'bg-green-600 w-full' : 'bg-amber-500 w-2/3'
+              className={`h-full rounded-full transition-all duration-500 ${
+                isStrong ? 'bg-emerald-500 w-full' : 'bg-amber-400 w-2/3'
               }`}
             />
           </div>
           <p
-            className={`text-xs mt-1 ${
-              isStrong ? 'text-green-700' : 'text-amber-700'
+            className={`text-[11px] font-semibold mt-1.5 ${
+              isStrong ? 'text-emerald-600' : 'text-amber-600'
             }`}
           >
             {isStrong ? 'Contraseña fuerte' : 'Contraseña débil'}
@@ -138,25 +126,25 @@ function CreatePasswordContent() {
 
   if (!token) {
     return (
-      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8 text-center">
-        <p className="text-gray-600">Cargando...</p>
+      <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-100/50 p-8 text-center">
+        <div className="w-6 h-6 border-2 border-gray-200 border-t-[#1e3a5f] rounded-full animate-spin mx-auto" />
       </div>
     )
   }
 
   if (success) {
     return (
-      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8 text-center space-y-6">
+      <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-100/50 p-8 text-center space-y-6 animate-scale-in">
         <div className="flex justify-center">
-          <div className="bg-green-50 p-3 rounded-full">
-            <Check className="w-8 h-8 text-green-600" />
+          <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center">
+            <Check className="w-7 h-7 text-emerald-500" />
           </div>
         </div>
         <div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
-            {isReset ? 'Contraseña actualizada' : '¡Cuenta activada!'}
+          <h2 className="text-lg font-bold text-gray-900 mb-2 tracking-tight">
+            {isReset ? 'Contraseña actualizada' : 'Cuenta activada'}
           </h2>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-500 text-sm">
             {isReset
               ? 'Tu contraseña ha sido restablecida. Redirigiendo...'
               : 'Tu cuenta ha sido activada. Redirigiendo...'}
@@ -167,10 +155,19 @@ function CreatePasswordContent() {
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8">
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-100/50 p-8">
+      <div className="mb-6">
+        <h2 className="text-lg font-bold text-gray-900 tracking-tight">
+          {isReset ? 'Nueva contraseña' : 'Activa tu cuenta'}
+        </h2>
+        <p className="text-gray-400 text-sm mt-1.5">
+          {isReset ? 'Crea una nueva contraseña segura' : 'Crea tu contraseña para comenzar a usar ImpulsIA'}
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2">
-          <Label htmlFor="password">Nueva contraseña</Label>
+          <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-gray-500">Nueva contraseña</Label>
           <div className="relative">
             <Input
               id="password"
@@ -185,12 +182,12 @@ function CreatePasswordContent() {
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               disabled={loading}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 disabled:opacity-50"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 disabled:opacity-50 transition-colors"
             >
               {showPassword ? (
-                <EyeOff className="w-5 h-5" />
+                <EyeOff className="w-4 h-4" />
               ) : (
-                <Eye className="w-5 h-5" />
+                <Eye className="w-4 h-4" />
               )}
             </button>
           </div>
@@ -199,7 +196,7 @@ function CreatePasswordContent() {
         {password && <PasswordStrengthIndicator password={password} />}
 
         <div className="space-y-2">
-          <Label htmlFor="confirm-password">Confirmar contraseña</Label>
+          <Label htmlFor="confirm-password" className="text-xs font-semibold uppercase tracking-wider text-gray-500">Confirmar contraseña</Label>
           <div className="relative">
             <Input
               id="confirm-password"
@@ -214,31 +211,31 @@ function CreatePasswordContent() {
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               disabled={loading}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 disabled:opacity-50"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 disabled:opacity-50 transition-colors"
             >
               {showConfirmPassword ? (
-                <EyeOff className="w-5 h-5" />
+                <EyeOff className="w-4 h-4" />
               ) : (
-                <Eye className="w-5 h-5" />
+                <Eye className="w-4 h-4" />
               )}
             </button>
           </div>
           {confirmPassword && !passwordsMatch && (
-            <p className="text-xs text-red-600">
+            <p className="text-xs text-red-500 font-medium animate-fade-in">
               Las contraseñas no coinciden
             </p>
           )}
         </div>
 
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">
+          <div className="p-3 bg-red-50 border border-red-100 rounded-xl text-sm text-red-600 font-medium animate-fade-in">
             {error}
           </div>
         )}
 
         <Button
           type="submit"
-          className="w-full bg-[#1e3a5f] hover:bg-[#152d47] text-white h-9"
+          className="w-full bg-gradient-to-r from-[#1e3a5f] to-[#2a5080] hover:from-[#162d4a] hover:to-[#1e3a5f] text-white h-10 rounded-xl shadow-md shadow-[#1e3a5f]/15 transition-all duration-300"
           disabled={loading || !isPasswordValid || !passwordsMatch}
         >
           {loading ? (
@@ -247,15 +244,15 @@ function CreatePasswordContent() {
               Procesando...
             </>
           ) : (
-            'Crear contraseña'
+            isReset ? 'Actualizar contraseña' : 'Activar cuenta'
           )}
         </Button>
       </form>
 
       <div className="mt-6 text-center">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-400">
           ¿Ya tienes cuenta?{' '}
-          <Link href="/login" className="text-[#1e3a5f] hover:underline font-medium">
+          <Link href="/login" className="text-[#1e3a5f]/70 hover:text-[#1e3a5f] font-medium transition-colors duration-200">
             Inicia sesión
           </Link>
         </p>
@@ -266,7 +263,11 @@ function CreatePasswordContent() {
 
 export default function CreatePasswordPage() {
   return (
-    <Suspense fallback={<div className="bg-white border border-gray-200 rounded-lg shadow-sm p-8 text-center"><p className="text-gray-600">Cargando...</p></div>}>
+    <Suspense fallback={
+      <div className="bg-white border border-gray-100 rounded-2xl shadow-xl shadow-gray-100/50 p-8 text-center">
+        <div className="w-6 h-6 border-2 border-gray-200 border-t-[#1e3a5f] rounded-full animate-spin mx-auto" />
+      </div>
+    }>
       <CreatePasswordContent />
     </Suspense>
   )

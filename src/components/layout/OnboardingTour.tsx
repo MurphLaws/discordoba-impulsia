@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { X, ChevronRight } from 'lucide-react'
+import { X, ChevronRight, Sparkles } from 'lucide-react'
 
 interface OnboardingTourProps {
   role: string
@@ -107,43 +107,50 @@ export default function OnboardingTour({
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/40 z-40"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 animate-fade-in"
         onClick={handleClose}
       />
 
       {/* Modal */}
       <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+        <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-scale-in overflow-hidden">
           {/* Header */}
-          <div className="flex items-start justify-between p-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900">
-              Bienvenido a ImpulsIA
-            </h2>
+          <div className="flex items-start justify-between px-7 pt-7 pb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1e3a5f] to-[#2a5080] flex items-center justify-center shadow-md shadow-[#1e3a5f]/20">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 tracking-tight">
+                Bienvenido a ImpulsIA
+              </h2>
+            </div>
             <button
               onClick={handleClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-gray-300 hover:text-gray-500 transition-colors duration-200 p-1"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Content */}
-          <div className="p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              {step.title}
-            </h3>
-            <p className="text-gray-600 mb-6">{step.description}</p>
+          <div className="px-7 pb-4">
+            <div className="bg-gray-50/70 rounded-xl p-5 mb-5">
+              <h3 className="text-base font-semibold text-gray-900 mb-1.5">
+                {step.title}
+              </h3>
+              <p className="text-sm text-gray-500 leading-relaxed">{step.description}</p>
+            </div>
 
             {/* Progress Dots */}
-            <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="flex items-center justify-center gap-2 mb-2">
               {steps.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentStep(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
                     index === currentStep
-                      ? 'bg-[#1e3a5f]'
-                      : 'bg-gray-300 hover:bg-gray-400'
+                      ? 'bg-[#1e3a5f] w-6'
+                      : 'bg-gray-200 hover:bg-gray-300 w-1.5'
                   }`}
                   aria-label={`Go to step ${index + 1}`}
                 />
@@ -151,24 +158,24 @@ export default function OnboardingTour({
             </div>
 
             {/* Step Counter */}
-            <p className="text-xs text-gray-500 text-center mb-6">
-              Paso {currentStep + 1} de {steps.length}
+            <p className="text-[11px] text-gray-400 text-center font-medium">
+              {currentStep + 1} de {steps.length}
             </p>
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between p-6 border-t border-gray-200">
+          <div className="flex items-center justify-between px-7 py-5 border-t border-gray-100 bg-gray-50/30">
             <button
               onClick={handleClose}
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-sm font-medium text-gray-400 hover:text-gray-600 transition-colors duration-200"
             >
-              Saltar tour
+              Saltar
             </button>
             <button
               onClick={handleNext}
-              className="flex items-center gap-2 px-4 py-2 bg-[#1e3a5f] text-white rounded-lg hover:bg-[#162d4a] transition-colors text-sm font-medium"
+              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#1e3a5f] to-[#2a5080] text-white rounded-xl hover:from-[#162d4a] hover:to-[#1e3a5f] shadow-md shadow-[#1e3a5f]/15 transition-all duration-300 text-sm font-semibold"
             >
-              {currentStep === steps.length - 1 ? 'Completado' : 'Siguiente'}
+              {currentStep === steps.length - 1 ? 'Comenzar' : 'Siguiente'}
               {currentStep < steps.length - 1 && (
                 <ChevronRight className="w-4 h-4" />
               )}

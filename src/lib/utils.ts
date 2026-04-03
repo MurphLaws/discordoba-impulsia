@@ -52,14 +52,14 @@ export function severityColor(severity: string): string {
 
 export function stageColor(stage: string): string {
   const colors: Record<string, string> = {
-    OPORTUNIDAD: 'bg-gray-100 text-gray-700',
-    VIABILIDAD_TECNICA: 'bg-blue-100 text-blue-700',
-    MUESTRA: 'bg-purple-100 text-purple-700',
-    VALIDACION: 'bg-yellow-100 text-yellow-700',
-    LANZAMIENTO: 'bg-green-100 text-green-700',
-    DESCARTADO: 'bg-red-100 text-red-700',
+    OPORTUNIDAD: 'bg-gray-50 text-gray-600 ring-1 ring-gray-200',
+    VIABILIDAD_TECNICA: 'bg-blue-50 text-blue-700 ring-1 ring-blue-200',
+    MUESTRA: 'bg-purple-50 text-purple-700 ring-1 ring-purple-200',
+    VALIDACION: 'bg-yellow-50 text-yellow-700 ring-1 ring-yellow-200',
+    LANZAMIENTO: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200',
+    DESCARTADO: 'bg-red-50 text-red-700 ring-1 ring-red-200',
   }
-  return colors[stage] || 'bg-gray-100 text-gray-700'
+  return colors[stage] || 'bg-gray-50 text-gray-600 ring-1 ring-gray-200'
 }
 
 export function formatDate(date: Date | string) {

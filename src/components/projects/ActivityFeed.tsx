@@ -15,7 +15,15 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
 import { daysAgo, cn } from '@/lib/utils'
-import type { Activity, ActivityType } from '@/generated/prisma'
+import type { ActivityType } from '@/generated/prisma/enums'
+
+type Activity = {
+  id: string
+  type: ActivityType
+  content: string
+  createdAt: string | Date
+  user: { name: string | null; email: string }
+}
 
 interface ActivityFeedProps {
   projectId: string

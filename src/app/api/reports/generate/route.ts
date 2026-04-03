@@ -1,7 +1,7 @@
 import { auth } from '@/auth'
 import { db } from '@/lib/db'
 import { formatDate } from '@/lib/utils'
-import type { Stage } from '@/generated/prisma'
+import type { Stage } from '@/generated/prisma/client'
 import * as XLSX from 'xlsx'
 import jsPDF from 'jspdf'
 

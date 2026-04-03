@@ -1,9 +1,9 @@
 {
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "npx prisma db push --accept-data-loss && npm start",
     "healthcheckPath": "/api/health",
     "healthcheckTimeout": 300
   }

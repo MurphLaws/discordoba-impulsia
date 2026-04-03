@@ -1,5 +1,5 @@
 import { db } from './db'
-import type { Severity, AlertType } from '@/generated/prisma'
+import type { Severity, AlertType } from '@/generated/prisma/client'
 
 const STAGNATION_DAYS = 7
 const CRITICAL_DAYS = 3

@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "prisma generate && next build",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "./node_modules/.bin/next dev",
+    "build": "./node_modules/.bin/prisma generate && ./node_modules/.bin/next build",
+    "start": "./node_modules/.bin/next start",
+    "lint": "./node_modules/.bin/eslint"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
